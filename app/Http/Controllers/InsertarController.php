@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -8,17 +11,24 @@ use App\Models\Article;
 
 class InsertarController extends Controller
 {
+    /*
+     * Mostra el formulari per insertar articles
+     */
     public function mostrarFormulari()
     {
         return view('insertar');
     }
 
+    /*
+     * Processa les dades del formulari i inserta l'article
+     */
     public function insertar(Request $request)
     {
         $titol = trim($request->input('titol'));
         $cos = trim($request->input('cos'));
         $errors = [];
 
+        // Validació de camps obligatoris
         if (empty($titol)) {
             $errors[] = "El camp 'Títol' és obligatori.";
         }
@@ -33,7 +43,7 @@ class InsertarController extends Controller
             return redirect('/insertar');
         }
 
-        // Verificar duplicats
+        // Verifica si ja existeix un article idèntic
         $existeix = Article::where('titol', $titol)
                           ->where('cos', $cos)
                           ->exists();
@@ -45,7 +55,7 @@ class InsertarController extends Controller
             return redirect('/insertar');
         }
 
-        // Crear article nou
+        // Crea un nou article
         $article = new Article();
         $article->titol = $titol;
         $article->cos = $cos;

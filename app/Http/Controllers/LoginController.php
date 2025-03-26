@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -10,16 +13,23 @@ use App\Models\Usuari;
 
 class LoginController extends Controller
 {
+    /*
+     * Mostra la vista de login
+     */
     public function mostrarLogin()
     {
         return view('login_nou');
     }
+
+    /*
+     * Verifica les credencials de l'usuari
+     */
     public function verificarLogin(Request $request)
     {
-        $request->flash(); // para mantener los valores de entrada
+        $request->flash(); // per mantenir els valors d'entrada
         $errors = [];
 
-        // Si ya hay una cookie para recordar al usuario
+        // Si ja hi ha una cookie per recordar l'usuari
         if ($request->cookie('remember_me_token')) {
             $token = $request->cookie('remember_me_token');
             $user = Usuari::where('token_remember', $token)
@@ -37,7 +47,7 @@ class LoginController extends Controller
             }
         }
 
-        // Comprobación normal por formulario
+        // Comprovació normal per formulari
         $usuari = $request->input('usuari');
         $email = $request->input('email');
         $password = $request->input('pass');
@@ -52,7 +62,7 @@ class LoginController extends Controller
             return redirect('/login');
         }
 
-        // Verificar usuario en la base de datos
+        // Verificar usuari a la base de dades
         $user = Usuari::where('usuari', $usuari)->first();
 
         if ($user && Hash::check($password, $user->contrasenya)) {
@@ -75,7 +85,7 @@ class LoginController extends Controller
                 $user->token_remember = $token;
                 $user->token_remember_expiracio = $expiracio;
                 $user->save();
-                Cookie::queue('remember_me_token', $token, 60 * 24 * 7); // 7 días
+                Cookie::queue('remember_me_token', $token, 60 * 24 * 7); // 7 dies
             } else {
                 Cookie::queue(Cookie::forget('remember_me_token'));
             }
@@ -88,6 +98,9 @@ class LoginController extends Controller
         }
     }
 
+    /*
+     * Mostra la pàgina principal de l'usuari autenticat
+     */
     public function mostrarIndexUsuari()
     {
         if (!session('usuari')) {
@@ -98,11 +111,11 @@ class LoginController extends Controller
         return view('index_usuari', compact('usuari'));
     }
 
+    /*
+     * Mostra el formulari de registre
+     */
     public function mostrarRegistre()
     {
-    return view('registre_nou');
+        return view('registre_nou');
     }
 }
-
-
-

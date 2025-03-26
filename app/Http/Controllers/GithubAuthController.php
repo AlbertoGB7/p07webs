@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -14,7 +17,7 @@ class GithubAuthController extends Controller
     
     public function __construct()
     {
-        // Configuración de Hybridauth
+        // Configuració de Hybridauth
         $this->config = [
             'callback' => config('services.github.redirect'),
             'providers' => [
@@ -32,35 +35,41 @@ class GithubAuthController extends Controller
         ];
     }
     
+    /*
+     * Redirigeix a GitHub per iniciar l'autenticació
+     */
     public function redirectToGithub()
     {
         try {
             $hybridauth = new Hybridauth($this->config);
             $adapter = $hybridauth->authenticate('GitHub');
             
-            // Si llegamos aquí, la autenticación ya está completada
-            // (normalmente no sucederá en la primera llamada)
+            // Si arribem aquí, l'autenticació ja està completada
+            // (normalment no passarà a la primera crida)
             return $this->handleGithubCallback();
         } catch (\Exception $e) {
-            return redirect('/login')->with('missatge', 'Error con la autenticación de GitHub: ' . $e->getMessage());
+            return redirect('/login')->with('missatge', 'Error amb l\'autenticació de GitHub: ' . $e->getMessage());
         }
     }
     
+    /*
+     * Gestiona la resposta de GitHub després de l'autenticació
+     */
     public function handleGithubCallback()
     {
         try {
             $hybridauth = new Hybridauth($this->config);
             $adapter = $hybridauth->authenticate('GitHub');
             
-            // Obtener el perfil del usuario
+            // Obtenir el perfil de l'usuari
             $userProfile = $adapter->getUserProfile();
             
-            // Datos del usuario
+            // Dades de l'usuari
             $email = $userProfile->email;
             $name = $userProfile->firstName . ' ' . $userProfile->lastName;
             
             if (empty($email)) {
-                // Intentar obtener el email de otra forma si no está disponible directamente
+                // Intenta obtenir el correu electrònic d'una altra manera si no està disponible directament
                 $emails = $adapter->apiRequest('user/emails');
                 if (!empty($emails) && is_array($emails)) {
                     foreach ($emails as $emailData) {
@@ -73,14 +82,14 @@ class GithubAuthController extends Controller
             }
             
             if (empty($email)) {
-                return redirect('/login')->with('missatge', 'No se pudo obtener el email del usuario. Por favor, permite el acceso al email en tu cuenta de GitHub.');
+                return redirect('/login')->with('missatge', 'No s\'ha pogut obtenir el correu de l\'usuari. Si us plau, permet l\'accés al correu al teu compte de GitHub.');
             }
             
-            // Comprobar si el usuario ya existe en la base de datos
+            // Comprova si l'usuari ja existeix a la base de dades
             $existingUser = Usuari::obtenirPerCorreu($email);
             
             if (!$existingUser) {
-                // Si el usuario no existe, lo creamos
+                // Si l'usuari no existeix, el creem
                 $nombreAleatorio = 'Usuari' . rand(1000, 9999);
                 
                 $usuario = new Usuari();
@@ -94,21 +103,21 @@ class GithubAuthController extends Controller
                 Session::put('user_id', $usuario->id);
                 Session::put('rol', $usuario->rol);
             } else {
-                // Si el usuario ya existe, iniciamos su sesión
+                // Si l'usuari ja existeix, iniciem la seva sessió
                 Session::put('usuari', $existingUser->usuari);
                 Session::put('user_id', $existingUser->id);
                 Session::put('rol', $existingUser->rol);
             }
             
-            // Establecer la sesión como login exitoso
+            // Establir la sessió com a login exitós
             Session::put('login_exitoso', true);
             
-            // Desconectar al usuario de GitHub
+            // Desconnectar l'usuari de GitHub
             $adapter->disconnect();
             
             return redirect('/index_usuari');
         } catch (\Exception $e) {
-            return redirect('/login')->with('missatge', 'Error con la autenticación de GitHub: ' . $e->getMessage());
+            return redirect('/login')->with('missatge', 'Error amb l\'autenticació de GitHub: ' . $e->getMessage());
         }
     }
 }

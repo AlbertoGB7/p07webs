@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -9,22 +12,28 @@ use Illuminate\Support\Facades\Session;
 
 class GestionarUsuarisController extends Controller
 {
+    /*
+     * Mostra la llista d'usuaris (només accessible per administradors)
+     */
     public function mostrarUsuaris()
     {
-        // Verificar que el usuario sea administrador
+        // Comprova que l'usuari sigui administrador
         if (Session::get('rol') !== 'admin') {
             return redirect('/index_usuari');
         }
         
-        // Obtener todos los usuarios
+        // Obté tots els usuaris
         $usuaris = Usuari::all();
         
         return view('gestionar_usuaris', ['usuaris' => $usuaris]);
     }
     
+    /*
+     * Elimina un usuari i els seus articles (només accessible per administradors)
+     */
     public function eliminarUsuari(Request $request)
     {
-        // Verificar que el usuario sea administrador
+        // Comprova que l'usuari sigui administrador
         if (Session::get('rol') !== 'admin') {
             return redirect('/login');
         }
@@ -32,14 +41,14 @@ class GestionarUsuarisController extends Controller
         if ($request->has('id')) {
             $id = (int) $request->input('id');
             
-            // Buscar el usuario
+            // Cerca l'usuari
             $usuari = Usuari::find($id);
             
             if ($usuari) {
-                // Eliminar artículos asociados al usuario
+                // Elimina els articles associats a l'usuari
                 Article::where('usuari_id', $id)->delete();
                 
-                // Eliminar el usuario
+                // Elimina l'usuari
                 $usuari->delete();
                 
                 return redirect('/gestionar_usuaris')

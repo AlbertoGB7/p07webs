@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -9,11 +12,17 @@ use App\Http\Controllers\verificar_sessio;
 
 class ModificarController extends Controller
 {
+    /*
+     * Mostra el formulari per seleccionar l'article a modificar
+     */
     public function mostrarFormulari()
     {
         return view('modificar');
     }
 
+    /*
+     * Processa el formulari per modificar un article
+     */
     public function processarFormulari(Request $request)
     {
         $id = trim($request->input('id'));

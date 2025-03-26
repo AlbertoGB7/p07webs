@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -8,6 +11,9 @@ use App\Models\Article;
 
 class MostrarUsuariController extends Controller
 {
+    /*
+     * Mostra els articles de l'usuari autenticat amb paginació
+     */
     public function index(Request $request)
     {
         if (!Session::has('user_id')) {
