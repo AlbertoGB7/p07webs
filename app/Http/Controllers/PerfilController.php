@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -9,6 +12,9 @@ use Illuminate\Support\Facades\File;
 
 class PerfilController extends Controller
 {
+    /*
+     * Mostra el formulari per modificar les dades del perfil
+     */
     public function mostrarFormulari()
     {
         $usuari = session('usuari');
@@ -24,6 +30,9 @@ class PerfilController extends Controller
         ]);
     }
     
+    /*
+     * Processa l'actualització del perfil (nom i imatge)
+     */
     public function actualitzarPerfil(Request $request)
     {
         $usuari = session('usuari');
@@ -34,7 +43,7 @@ class PerfilController extends Controller
         
         $dadesUsuari = Usuari::where('usuari', $usuari)->first();
         
-        // Verificar si el nuevo nombre ya existe (si cambió)
+        // Verificar si el nom ja existeix (si ha canviat)
         $nouNom = $request->input('nou_nom');
         if ($nouNom !== $dadesUsuari->usuari) {
             $existeUsuari = Usuari::where('usuari', $nouNom)->first();
@@ -44,14 +53,14 @@ class PerfilController extends Controller
             }
         }
         
-        // Actualizar el nombre de usuario
+        // Actualitzar el nom d'usuari
         $dadesUsuari->usuari = $nouNom;
         
-        // Procesar la imagen si se proporcionó una nueva
+        // Processar la imatge si s'ha proporcionat una nova
         if ($request->hasFile('nova_imatge')) {
             $imatge = $request->file('nova_imatge');
             
-            // Validar el tipo de archivo
+            // Validar el tipus d'arxiu
             $tipus = $imatge->getClientOriginalExtension();
             $tipusValids = ['jpg', 'jpeg', 'png', 'webp'];
             
@@ -60,13 +69,13 @@ class PerfilController extends Controller
                 return redirect('/modificar_perfil');
             }
             
-            // Validar tamaño del archivo (máximo 2MB)
+            // Validar mida de l'arxiu (màxim 2MB)
             if ($imatge->getSize() > 2097152) {
                 Session::flash('missatge', "La imatge és massa gran. Màxim 2MB.");
                 return redirect('/modificar_perfil');
             }
             
-            // Eliminar imagen anterior si existe y no es la por defecto
+            // Eliminar imatge anterior si existeix i no és la per defecte
             if ($dadesUsuari->imatge && !str_contains($dadesUsuari->imatge, 'def_user.jpeg')) {
                 $oldImagePath = public_path($dadesUsuari->imatge);
                 if (File::exists($oldImagePath)) {
@@ -74,7 +83,7 @@ class PerfilController extends Controller
                 }
             }
             
-            // Guardar nueva imagen
+            // Guardar nova imatge
             $novaImatgeNom = time() . '_' . $imatge->getClientOriginalName();
             $imatge->move(public_path('Imatges/perfil'), $novaImatgeNom);
             $dadesUsuari->imatge = 'Imatges/perfil/' . $novaImatgeNom;
@@ -82,7 +91,7 @@ class PerfilController extends Controller
         
         $dadesUsuari->save();
         
-        // Actualizar nombre en la sesión
+        // Actualitzar nom a la sessió
         Session::put('usuari', $nouNom);
         
         Session::flash('missatge_exit', "Perfil actualitzat correctament!");

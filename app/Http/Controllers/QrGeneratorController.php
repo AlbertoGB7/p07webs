@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -9,40 +12,43 @@ use App\Models\Article;
 
 class QrGeneratorController extends Controller
 {
+    /*
+     * Genera i descarrega un codi QR per a un article específic
+     */
     public function generarQr(Request $request)
     {
-        // Verificar si existe el ID
+        // Verificar si existeix l'ID
         if (!$request->has('id')) {
-            return response('No se han recibido los parámetros necesarios.', 400);
+            return response('No s\'han rebut els paràmetres necessaris.', 400);
         }
         
         $id = $request->input('id');
         
-        // Obtener el artículo de la base de datos
+        // Obtenir l'article de la base de dades
         $article = Article::find($id);
         
         if (!$article) {
-            return response('No se encontró el artículo.', 404);
+            return response('No s\'ha trobat l\'article.', 404);
         }
         
-        // Crear un JSON con los datos
+        // Crear un JSON amb les dades
         $contenido = json_encode([
             'titol' => $article->titol,
             'cos' => $article->cos
         ]);
         
-        // Crear el objeto QR
+        // Crear l'objecte QR
         $qr_Code = new QrCode($contenido);
         $qr_Code->setSize(300);
         
-        // Crear el escritor PNG
+        // Crear l'escriptor PNG
         $writer = new PngWriter();
         $qrImage = $writer->write($qr_Code);
         
-        // Definir el nombre del archivo para la descarga
+        // Definir el nom de l'arxiu per a la descàrrega
         $file_name = md5(uniqid()) . '.png';
         
-        // Devolver la imagen como respuesta para descargar
+        // Retornar la imatge com a resposta per descarregar
         return response($qrImage->getString())
             ->header('Content-Type', 'image/png')
             ->header('Content-Disposition', 'attachment; filename="' . $file_name . '"');

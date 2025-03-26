@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -16,6 +18,7 @@ class SocialAuthController extends Controller
 
     public function __construct()
     {
+        // Configuració del client de Google
         $this->googleClient = new Google_Client();
         $this->googleClient->setClientId(config('services.google.client_id'));
         $this->googleClient->setClientSecret(config('services.google.client_secret'));
@@ -24,33 +27,39 @@ class SocialAuthController extends Controller
         $this->googleClient->addScope('profile');
     }
 
+    /*
+     * Redirigeix a Google per iniciar l'autenticació
+     */
     public function redirectToGoogle()
     {
-        // Generar URL para redireccionar a Google
+        // Generar URL per redirigir a Google
         $authUrl = $this->googleClient->createAuthUrl();
         return redirect($authUrl);
     }
 
+    /*
+     * Gestiona la resposta de Google després de l'autenticació
+     */
     public function handleGoogleCallback()
     {
         try {
             if (request()->has('code')) {
-                // Obtener el token de acceso
+                // Obtenir el token d'accés
                 $token = $this->googleClient->fetchAccessTokenWithAuthCode(request('code'));
                 $this->googleClient->setAccessToken($token['access_token']);
                 
-                // Obtener información del usuario
+                // Obtenir informació de l'usuari
                 $googleService = new Google_Service_Oauth2($this->googleClient);
                 $googleUser = $googleService->userinfo->get();
                 
                 $email = $googleUser->email;
                 $nombreCompleto = $googleUser->name;
                 
-                // Buscar el usuario por su correo
+                // Buscar l'usuari pel seu correu
                 $usuarioExistente = Usuari::obtenirPerCorreu($email);
                 
                 if (!$usuarioExistente) {
-                    // Si el usuario no existe, lo creamos
+                    // Si l'usuari no existeix, el creem
                     $nombreAleatorio = 'Usuari' . rand(1000, 9999);
                     
                     $usuario = new Usuari();
@@ -64,21 +73,21 @@ class SocialAuthController extends Controller
                     Session::put('user_id', $usuario->id);
                     Session::put('rol', $usuario->rol);
                 } else {
-                    // Si el usuario ya existe, iniciamos su sesión
+                    // Si l'usuari ja existeix, iniciem la seva sessió
                     Session::put('usuari', $usuarioExistente->usuari);
                     Session::put('user_id', $usuarioExistente->id);
                     Session::put('rol', $usuarioExistente->rol);
                 }
                 
-                // Establecer la sesión como login exitoso
+                // Establir la sessió com a login exitós
                 Session::put('login_exitoso', true);
                 
                 return redirect('/index_usuari');
             } else {
-                return redirect('/login')->with('missatge', 'Error durante la autenticación con Google');
+                return redirect('/login')->with('missatge', 'Error durant l\'autenticació amb Google');
             }
         } catch (\Exception $e) {
-            return redirect('/login')->with('missatge', 'Error durante la autenticación: ' . $e->getMessage());
+            return redirect('/login')->with('missatge', 'Error durant l\'autenticació: ' . $e->getMessage());
         }
     }
 }

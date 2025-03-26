@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -12,11 +15,17 @@ use Illuminate\Support\Facades\Hash;
 
 class RecuperacioController extends Controller
 {
+    /*
+     * Mostra el formulari per enviar un correu de recuperació
+     */
     public function mostrarFormulariCorreu()
     {
         return view('enviar_correu');
     }
     
+    /*
+     * Processa l'enviament del correu de recuperació
+     */
     public function enviarCorreu(Request $request)
     {
         $request->validate([
@@ -71,9 +80,12 @@ class RecuperacioController extends Controller
         }
     }
     
+    /*
+     * Mostra el formulari per restablir la contrasenya
+     */
     public function mostrarFormulariRestablir($token)
     {
-        // Verificar que el token existe y es válido antes de mostrar el formulario
+        // Verificar que el token existeix i és vàlid abans de mostrar el formulari
         $usuari = Usuari::obtenirPerTokenRecuperacio($token);
         
         if (!$usuari) {
@@ -84,6 +96,9 @@ class RecuperacioController extends Controller
         return view('restablir_contrasenya', ['token' => $token]);
     }
     
+    /*
+     * Processa el restabliment de contrasenya
+     */
     public function restablirContrasenya(Request $request)
     {
         $request->validate([
