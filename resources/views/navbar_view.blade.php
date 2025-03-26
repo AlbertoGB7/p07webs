@@ -1,3 +1,9 @@
+<?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
+?>
+
 @php
     use Illuminate\Support\Facades\Session;
     use App\Models\Usuari;

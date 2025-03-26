@@ -1,3 +1,9 @@
+<?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
+?>
+
 @include('navbar_view')
 
 <!DOCTYPE html>
@@ -10,7 +16,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Función para cargar los artículos de forma automática
+            // Funció per carregar els articles de forma automàtica
             function carregarArticles() {
                 fetch('{{ url("/controladorAjax") }}?action=obtenir_articles')
                     .then(response => {
@@ -19,7 +25,7 @@
                     })
                     .then(articles => {
                         const tbody = document.querySelector(".fl-table tbody");
-                        tbody.innerHTML = ""; // Limpia el contenido actual de la tabla
+                        tbody.innerHTML = ""; // Neteja el contingut actual de la taula
                         articles.forEach(article => {
                             const row = document.createElement("tr");
                             row.innerHTML = `
@@ -39,11 +45,10 @@
                     .catch(error => console.error("Error carregant els articles:", error));
             }
 
-            // Cargar los artículos automáticamente al cargar la página
+            // Carregar els articles automàticament en carregar la pàgina
             carregarArticles();
         });
     </script>
-
 </head>
 <body>
     <div class="container"><br><br>
@@ -66,7 +71,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí se cargarán los datos mediante JavaScript -->
+                    <!-- Aquí es carregaran les dades mitjançant JavaScript -->
                 </tbody>
             </table>
         </div>
@@ -76,6 +81,26 @@
                 <button type="button" class="tornar" role="button">Anar enrere</button>
             </a>
         </div>
+    </div>
+
+    <div class="mb-3">
+        <form action="{{ route('processar_qr') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="card mt-4">
+                <div class="card-header bg-dark text-white">
+                    <h4>Pujar QR</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="qr_file" class="form-label">Selecciona un arxiu QR</label>
+                        <input type="file" name="qr_file" id="qr_file" class="form-control" accept=".png, .jpg, .jpeg">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Llegir QR</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
 </html>

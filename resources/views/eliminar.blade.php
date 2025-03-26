@@ -1,3 +1,8 @@
+<?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
+?>
 @include('navbar_view')
 
 <!DOCTYPE html>

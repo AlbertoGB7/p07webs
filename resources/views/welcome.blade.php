@@ -1,3 +1,9 @@
+<?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
