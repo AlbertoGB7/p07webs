@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Http\Controllers;
 
@@ -9,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 
 class ContrasenyaController extends Controller
 {
+    /*
+     * Mostra el formulari per canviar la contrasenya
+     */
     public function mostrarFormulari()
     {
         if (!Session::has('usuari')) {
@@ -18,6 +24,9 @@ class ContrasenyaController extends Controller
         return view('modificar_contrasenya');
     }
     
+    /*
+     * Processa el canvi de contrasenya
+     */
     public function actualitzarContrasenya(Request $request)
     {
         if (!Session::has('usuari')) {
