@@ -1,4 +1,7 @@
 <?php
+/**
+ * Practica7 Laravel Webs - Alberto González - 2nDAW
+ */
 
 namespace App\Models;
 
@@ -13,7 +16,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Els atributs que són assignables massivament
      *
      * @var list<string>
      */
@@ -24,7 +27,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Els atributs que s'han d'ocultar en la serialització
      *
      * @var list<string>
      */
@@ -34,7 +37,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Obté els atributs que s'han de convertir
      *
      * @return array<string, string>
      */
