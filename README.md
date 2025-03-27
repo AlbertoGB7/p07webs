@@ -1,4 +1,4 @@
-# 🚀 Pràctica 7 Laravel: Aplicació d'Articles amb Integracions de Clash of Clans
+# 🚀 Pràctica 7 Laravel: Migració PHP natiu a Laravel
 
 ![Laravel Logo](https://laravel.com/img/logomark.min.svg)
 
@@ -35,7 +35,7 @@ La integració amb l'API de **Clash of Clans** permet als usuaris visualitzar in
 - Login tradicional amb usuari/contrasenya
 - Registre de nous usuaris
 - 🔐 Integració amb **Google OAuth**
-- 🖥️ Integració amb **GitHub OAuth**
+- 🖥️ Integració amb **GitHub HybAuth**
 - 📧 Recuperació de contrasenya via email
 - 🍪 Recordar sessió mitjançant cookies
 
@@ -116,7 +116,11 @@ El projecte segueix el patró **Model-Vista-Controlador** de Laravel:
 
 ### Rutes disponibles:
 
-GET /api/articles GET /api/articles/{userId} POST /api/articles PUT /api/articles DELETE /api/articles/{id}/{userId}
+- **GET** `/api/articles` - Obtenir tots els articles
+- **GET** `/api/articles/{userId}` - Obtenir articles per usuari
+- **POST** `/api/articles` - Crear un nou article
+- **PUT** `/api/articles` - Actualitzar un article existent
+- **DELETE** `/api/articles/{id}/{userId}` - Eliminar un article específic
 
 
 ---
@@ -160,3 +164,34 @@ php artisan migrate
 
 # 9. Inicia el servidor
 php artisan serve
+
+```
+
+## 📈 Millores Respecte a la Versió Anterior (Pràctica 6)
+
+- ✅ Seguretat millorada (CSRF, hashing, validacions)
+- ✅ Arquitectura més clara i escalable (MVC)
+- ✅ Autenticació avançada (OAuth)
+- ✅ Experiència d'usuari fluïda
+- ✅ Millora de codi
+
+
+## 🌐 Desplegament
+
+Per desplegar en un hosting com DonDominio:
+
+- 📁 Puja els fitxers via FTP
+- 📂 Assegura't que el document root apunta a `public`
+- ⚙️ Configura `.env` amb les dades de producció
+- 🚀 Executa comandes d'optimització (si tens accés SSH):
+
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+
+## 📞 Suport
+📧 Correu: agonzalez7@sapalomera.cat
+💬 Issues a GitHub: Obre una nova issue al repositori
