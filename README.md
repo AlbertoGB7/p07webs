@@ -1,66 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Pràctica 7 Laravel: Aplicació d'Articles amb Integracions de Clash of Clans
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel Logo](https://laravel.com/img/logomark.min.svg)
 
-## About Laravel
+## 📝 Descripció
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Aquest projecte és una aplicació web desenvolupada amb **Laravel** que permet als usuaris gestionar articles, compartir-los mitjançant codis QR i integrar dades de l'API oficial de **Clash of Clans**. L'aplicació ofereix múltiples mètodes d'autenticació i una experiència d'usuari completa.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🎮 Temàtica
 
-## Learning Laravel
+La integració amb l'API de **Clash of Clans** permet als usuaris visualitzar informació actualitzada sobre **clans** i **jugadors** directament des de l'aplicació.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 👤 Usuaris de Prova
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Administrador
+- **Usuari:** `Xavi`
+- **Correu:** `xmartin@sapalomera.cat`
+- **Contrasenya:** `P@ssw0rd`
 
-## Laravel Sponsors
+### Usuari Normal
+- **Usuari:** `Alberto`
+- **Correu:** `alberto.gb222@gmail.com`
+- **Contrasenya:** `P@ssw0rd`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## ✨ Funcionalitats Principals
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 🔐 Sistema d'Autenticació Avançat
 
-## Contributing
+- Login tradicional amb usuari/contrasenya
+- Registre de nous usuaris
+- 🔐 Integració amb **Google OAuth**
+- 🖥️ Integració amb **GitHub OAuth**
+- 📧 Recuperació de contrasenya via email
+- 🍪 Recordar sessió mitjançant cookies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 📚 Gestió d'Articles
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- CRUD complet (Crear, Llegir, Actualitzar, Eliminar)
+- 🔍 Cercador i filtrat d'articles
+- 📅 Ordenació per data o títol
+- 🔢 Selecció d'articles per pàgina
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 📱 Articles Compartits i QR
 
-## License
+- Vista **AJAX** per carregar articles compartits
+- Generació de **codis QR**
+- Lectura de codis QR per importar articles
+- Còpia directa d'articles compartits al perfil
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### ⚔️ Integració amb l'API de Clash of Clans
+
+#### Informació del Clan:
+- Escut
+- Nom
+- Nivell
+- Membres
+
+#### Perfil de Jugador:
+- Lliga
+- Nom
+- Nivell
+- Copes
+
+---
+
+### 👨‍💼 Gestió d'Usuaris (Només Admin)
+
+- Llistat d'usuaris
+- Eliminació d'usuaris i els seus articles
+
+---
+
+### 👤 Gestió de Perfil
+
+- Modificació del nom d'usuari
+- Canvi d'imatge de perfil
+- Canvi de contrasenya
+
+---
+
+## 🛠️ Tecnologies Utilitzades
+
+- **Laravel 12** - Framework PHP
+- **MySQL** - Base de dades
+- **Bootstrap 5** - Framework CSS
+- **JavaScript** - Interactivitat
+- **AJAX / Fetch** - Càrregues dinàmiques
+- **OAuth 2.0** - Autenticació social
+- **API REST** - Integració externa
+
+---
+
+## 🧩 Arquitectura MVC
+
+El projecte segueix el patró **Model-Vista-Controlador** de Laravel:
+
+- **Models:** `Article`, `ArticleCompartit`, `Usuari`
+- **Vistes:** Plantilles Blade
+- **Controladors:** Tota la lògica de negoci
+
+---
+
+## 🔄 API RESTful
+
+### Rutes disponibles:
+
+GET /api/articles GET /api/articles/{userId} POST /api/articles PUT /api/articles DELETE /api/articles/{id}/{userId}
+
+
+---
+
+## 📋 Requisits
+
+- PHP 8.1 o superior
+- Composer
+- MySQL
+- Node.js i NPM (per als assets)
+- Claus d'API de **Google** i **GitHub**
+- Clau de l'API de **Clash of Clans**
+
+---
+
+## ⚙️ Instal·lació
+
+```bash
+# 1. Clona el repositori
+git clone https://github.com/usuari/laravel-practica7.git
+
+# 2. Entra al projecte
+cd laravel-practica7
+
+# 3. Instal·la les dependències de PHP
+composer install
+
+# 4. Instal·la les dependències de Node
+npm install && npm run build
+
+# 5. Copia el fitxer d'entorn
+cp .env.example .env
+
+# 6. Configura la base de dades i les claus al .env
+
+# 7. Genera la clau de Laravel
+php artisan key:generate
+
+# 8. Executa les migracions
+php artisan migrate
+
+# 9. Inicia el servidor
+php artisan serve
