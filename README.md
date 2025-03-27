@@ -2,6 +2,9 @@
 
 ![Laravel Logo](https://laravel.com/img/logomark.min.svg)
 
+🌐 **Projecte allotjat a:** [https://agonzalez.cat/p07webs/public/index.php](https://agonzalez.cat/p07webs/public/index.php)
+
+
 ## 📝 Descripció
 
 Aquest projecte és una aplicació web desenvolupada amb **Laravel** que permet als usuaris gestionar articles, compartir-los mitjançant codis QR i integrar dades de l'API oficial de **Clash of Clans**. L'aplicació ofereix múltiples mètodes d'autenticació i una experiència d'usuari completa.
